@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jigxi.myapplication.models.Place
 import com.jigxi.myapplication.models.UserMap
 
+const val EXTRA_USER_MAP = "EXTRA_USER_MAP"
 private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
     lateinit var rvMaps:RecyclerView
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i(TAG, "OnItemClicked $position")
                 // When user taps on view in RV, navigate to new Activity
                 val intent = Intent(this@MainActivity, DisplayMapsActivity::class.java)
+                intent.putExtra(EXTRA_USER_MAP, userMaps[position])
                 startActivity(intent)
             }
         })
@@ -36,9 +38,9 @@ class MainActivity : AppCompatActivity() {
             UserMap(
                 "Memories from University",
                 listOf(
-                    Place("Branner Hall", "Best dorm at Stanford", 37.426, -122.163),
-                    Place("Gates CS building", "Many long nights in this basement", 37.430, -122.173),
-                    Place("Pinkberry", "First date with my wife", 37.444, -122.170)
+                    Place("Windsor University", "Beautiful Campus", 42.304655376255575, -83.06621066325292),
+                    Place("Lambton Tower", "MAC Faculty", 42.30546711894229, -83.06541076114303),
+                    Place("St. Dennis Athletic & Community Centre", "Lancers Sport Activities + Gym",  42.29916093115446, -83.06027504721582)
                 )
             ),
             UserMap("January vacation planning!",
