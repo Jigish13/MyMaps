@@ -6,13 +6,18 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jigxi.myapplication.models.Place
 import com.jigxi.myapplication.models.UserMap
 
 const val EXTRA_USER_MAP = "EXTRA_USER_MAP"
+const val EXTRA_MAP_TITLE = "EXTRA_MAP_TITLE"
 private const val TAG = "MainActivity"
+private const val REQUEST_CODE = 1234
 class MainActivity : AppCompatActivity() {
     lateinit var rvMaps:RecyclerView
+    lateinit var fabCreateMap:FloatingActionButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,7 +37,23 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
+
+        fabCreateMap = findViewById(R.id.fabCreateMap)
+        fabCreateMap.setOnClickListener {
+            Log.i(TAG, "onCreate: Clicked on fab")
+            val intent = Intent(this, CreateMapsActivity::class.java)
+            intent.putExtra(EXTRA_MAP_TITLE, "new map name")
+            startActivityForResult(intent, REQUEST_CODE)
+        }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(REQUEST_CODE, RESULT_OK, data)
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            // get new map data from the data
+        }
+    }
+
     private fun generateSampleData(): List<UserMap> {
         return listOf(
             UserMap(

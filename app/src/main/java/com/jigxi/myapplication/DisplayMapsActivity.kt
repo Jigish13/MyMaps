@@ -28,6 +28,7 @@ class DisplayMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         userMap = intent.getSerializableExtra(EXTRA_USER_MAP) as UserMap
+        supportActionBar?.title = userMap.title
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -56,6 +57,8 @@ class DisplayMapsActivity : AppCompatActivity(), OnMapReadyCallback {
             mMap.addMarker(MarkerOptions().position(latLng).title(place.title).snippet(place.description))
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 1000, 1000, 0))
+        // support of animations
+        // mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 1000, 1000, 0))
 
         // Add a marker in Sydney and move the camera - DEFAULT CODE
 //        val sydney = LatLng(-34.0, 151.0)
