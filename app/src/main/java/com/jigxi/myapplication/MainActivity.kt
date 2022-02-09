@@ -1,5 +1,6 @@
 package com.jigxi.myapplication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
             override fun onItemClick(position: Int) {
                 Log.i(TAG, "OnItemClicked $position")
                 // When user taps on view in RV, navigate to new Activity
+                val intent = Intent(this@MainActivity, DisplayMapsActivity::class.java)
+                startActivity(intent)
             }
         })
     }
