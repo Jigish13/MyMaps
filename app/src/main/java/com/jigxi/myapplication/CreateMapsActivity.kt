@@ -9,6 +9,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jigxi.myapplication.databinding.ActivityCreateMapsBinding
 
@@ -16,6 +17,10 @@ private const val TAG = "CreateMapsActivity"
 class CreateMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+
+    // creating a data structure to keep track of all the markers placed by user after long press
+    private var markers:MutableList<Marker> = mutableListOf()
+
     private lateinit var binding: ActivityCreateMapsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,9 +49,16 @@ class CreateMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
+        mMap.setOnInfoWindowClickListener { markerToDelete ->
+            Log.i(TAG, "onMapReady: setOnInfoWindowClickListener -> Delete this marker!")
+            markers.remove(markerToDelete) // remove from our list
+            markerToDelete.remove() // remove from map
+        }
+
         mMap.setOnMapLongClickListener { latLng ->
             Log.i(TAG, "onMapReady: OnMapLongClickListener")
-            mMap.addMarker(MarkerOptions().position(latLng).title("new marker").snippet("cool snippet"))
+            val marker = mMap.addMarker(MarkerOptions().position(latLng).title("new marker").snippet("cool snippet"))
+            markers.add(marker)
         }
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)
